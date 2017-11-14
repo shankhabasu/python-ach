@@ -5,7 +5,7 @@ python-ach
     :target: https://travis-ci.org/travishathaway/python-ach
 
 ACH file generator module for python. So far, this has been tested with
-“PPD” and “CCD” batches with addenda records.
+"PPD" and "CCD" batches with addenda records.
 
 Example
 =======
