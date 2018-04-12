@@ -2,9 +2,9 @@ from distutils.core import setup
 
 setup(
     name='carta-ach',
-    author='Travis Hathaway',
-    author_email='travis.j.hathaway@gmail.com',
-    version='0.3.0',
+    author='Carta, Inc.',
+    author_email='jared.hobbs@carta.com',
+    version='0.4.0',
     packages=[
         'ach',
     ],
