@@ -4,7 +4,7 @@ setup(
     name='carta-ach',
     author='Travis Hathaway',
     author_email='travis.j.hathaway@gmail.com',
-    version='0.3.0',
+    version='0.4.0',
     packages=[
         'ach',
     ],
