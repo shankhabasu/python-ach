@@ -48,8 +48,7 @@ class AchFile(object):
 
         if entry_desc is not None:
             entry_desc = entry_desc[:10].upper()
-        else:
-            entry_desc = self.get_entry_desc(std_ent_cls_code)
+        entry_desc = entry_desc or self.get_entry_desc(std_ent_cls_code)
 
         batch_count = len(self.batches) + 1
 
