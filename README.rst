@@ -3,7 +3,7 @@ carta-ach
 
 ACH file generator module for python. So far, this has been tested with
 "PPD" and "CCD" batches with addenda records.
-Forked from `python-ach` by Travis Hathaway.
+Forked from `python-ach` by Travis Hathaway and released on PyPI as `carta-ach`.
 
 Example
 =======
