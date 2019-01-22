@@ -19,10 +19,14 @@ class AchFile(object):
         The file_id_mod should be 'A' for the first of the day, 'B'
         for the second and so on.
         """
-
         self.settings = settings
 
         try:
+            company_name = settings.get(
+                'company_name',
+                settings['immediate_org_name'],
+            )
+            self.settings['company_name'] = company_name
             self.header = Header(
                 settings['immediate_dest'],
                 settings['immediate_org'], file_id_mod,
@@ -72,7 +76,7 @@ class AchFile(object):
             eff_ent_date=eff_ent_date.strftime('%y%m%d'),  # YYMMDD
             orig_stat_code='1',
             orig_dfi_id=self.settings['immediate_dest'][:8],
-            company_name=self.settings['immediate_org_name']
+            company_name=self.settings['company_name'][:16],
         )
 
         entries = []
