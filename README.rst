@@ -72,3 +72,65 @@ This returns the following NACHA file:
     9000001000001000000040037014587000000015000000000002213                                       
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+
+
+Below is another example of what happens if the validation fails for one entry.
+
+.. code:: python
+
+
+    from ach.builder import AchFile
+
+    settings = {
+        'immediate_dest' : '123456789', # Your bank's routing number
+        'immediate_org' : '123456789', # Bank assigned routing number
+        'immediate_dest_name' : 'YOUR BANK',
+        'immediate_org_name' : 'YOUR COMPANY',
+        'company_id' : '1234567890', #tax number
+    }
+
+    ach_file = AchFile('B',settings) #file Id mod
+
+    entries = [
+        {
+            'type'           : '27',
+            'routing_number' : '********', # invalid
+            'account_number' : '********', # invalid
+            'amount'         : '150.00',
+            'name'           : 'Billy Holiday',
+        },
+        {
+            'type'           : '22',
+            'routing_number' : '123232318',
+            'account_number' : '123123123',
+            'amount'         : '12.13',
+            'name'           : 'Rachel Welch',
+        },
+    ]
+
+    print(ach_file.add_batch('PPD', entries, credits=True, debits=True))
+
+This prints the following information:
+
+::
+
+[({'routing_number': '********', 'amount': '150.00', 'type': '27', 'account_number': '********', 'name': 'Billy Holiday'}, AchError('field needs to be numeric characters only',))]
+
+Here is the ach file with the skipped entry.
+
+.. code:: python
+
+    print ach_file.render_to_string()
+
+::
+
+    101 123456780 1234567802008071448B094101YOUR BANK              YOUR COMPANY
+    5200YOUR COMPANY                        1234567890PPDPAYROLL         200808   1123456780000001
+    622123232318123123123        0000001213               RACHEL WELCH            0123456780000001
+    820000000100123232310000000000000000000012131234567890                         123456780000001
+    9000001000001000000010012323231000000000000000000001213
+    9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+    9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+    9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+    9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+    9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
