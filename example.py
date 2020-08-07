@@ -42,3 +42,28 @@ entries = [
 ach_file.add_batch('PPD', entries, credits=True, debits=True)
 
 print ach_file.render_to_string()
+
+# add_batch will skip failures and return them
+
+ach_file = AchFile('B', settings) #file Id mod
+
+entries = [
+    {
+        'type'           : '27',
+        'routing_number' : '********', # invalid
+        'account_number' : '********', # invalid
+        'amount'         : '150.00',
+        'name'           : 'Billy Holiday',
+    },
+    {
+        'type'           : '22',
+        'routing_number' : '123232318',
+        'account_number' : '123123123',
+        'amount'         : '12.13',
+        'name'           : 'Rachel Welch',
+    },
+]
+
+print ach_file.add_batch('PPD', entries, credits=True, debits=True)
+
+print ach_file.render_to_string()
