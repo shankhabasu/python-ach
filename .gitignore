@@ -30,4 +30,4 @@ pip-log.txt
 #Vim swp
 *.swp
 .idea
-.*
+.DS_Store
