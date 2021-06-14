@@ -53,6 +53,26 @@ class Ach(object):
             zero_string += "0"
 
         return zero_string
+    
+    def validate_id_number_field(self, field, length):
+        """
+        Validates alpha numeric fields for nacha files
+        field: (str)
+        length: (int)
+        """
+        str_length = str(length)
+
+        match = re.match(r"([\w,\s,\-]{1," + str_length + "})", field)
+
+        if match:
+            if len(match.group(1)) < length:
+                field = match.group(1) + self.make_space(length - len(match.group(1)))
+            else:
+                field = match.group(1)
+        else:
+            raise AchError("field does not match alpha numeric criteria")
+
+        return field.upper()
 
     def validate_alpha_numeric_field(self, field, length):
         """
@@ -671,6 +691,8 @@ class EntryDetail(Ach):
                 value = self.validate_alpha_numeric_field(value, self.field_lengths[name][0])
             elif name == "chk_serial_num":
                 value = self.validate_alpha_numeric_field(value, self.field_lengths[name][1])
+            elif name == "id_number":
+                value = self.validate_id_number_field(value, self.field_lengths[name])
 
             # The rest
             else:
